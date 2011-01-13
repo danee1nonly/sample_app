@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   attr_accessor :password
   attr_accessible :name, :email, :password, :password_confirmation
+  has_many :microposts, :dependent => :destroy
   validates :password, :presence => true, :confirmation => true, :length => {:within => 6..40}
   before_save :encrypt_password
 
@@ -25,6 +26,11 @@ class User < ActiveRecord::Base
     user = find_by_id(id)
     (user && user.salt == cookie_salt) ? user : nil
   end
+  
+  def feed
+    Micropost.where("user_id = ?", id)
+  end
+  
   
   private
     def encrypt_password
