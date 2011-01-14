@@ -4,6 +4,7 @@ class MicropostsController < ApplicationController
   
   def create
     @micropost = current_user.microposts.build(params[:micropost])
+  logger.debug "The object is #{params[:micropost]}"
     if @micropost.save
       flash[:success] = 'Micropost created!'
       redirect_to root_path
@@ -11,6 +12,11 @@ class MicropostsController < ApplicationController
       @feed_items = []
       renter 'pages/home'
     end
+  end
+  
+  def new
+    @title = "new post"
+    @micropost = Micropost.new
   end
   
   def destroy

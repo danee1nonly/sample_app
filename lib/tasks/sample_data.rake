@@ -5,9 +5,8 @@ namespace :db do
   task :populate => :environment do
     Rake::Task['db:reset'].invoke
     make_users
+    make_locations
     make_microposts
-    make_relationships
-
   end
 end
 
@@ -23,18 +22,23 @@ def make_users
 end
 
 def make_microposts
-    User.all(:limit => 6).each do |user|
-      50.times do
-        user.microposts.create!(:content => Faker::Lorem.sentence(5))
+    Location.all(:limit => 5).each do |location|
+      5.times do |n|
+        location.microposts.create!(:title => Faker::Lorem.words, :content => Faker::Lorem.sentence(5), :user_id => 0)
       end
+    
+    end
+    User.all(:limit => 6).each do |user|
+      50.times do |n|
+        user.microposts.create!(:title => Faker::Lorem.words, :content => Faker::Lorem.sentence(5), :location_id => 1)
+      end
+    
     end  
-end
-
-def make_relationships
-  users = User.all
-  user = users.first
-  following = users[1..50]
-  followers = users[3..40]
-  following.each{|followed|user.follow!(followed)}
-  followers.each{|follower|follower.follow!(user)}
+  end
+    
+def make_locations
+    10.times do |n|
+      name = Faker::Address.city
+      Location.create!(:name => name)
+    end   
 end

@@ -10,5 +10,9 @@ end
 
   def logo
      image_tag("logo.png", :alt => "Sample App", :class => "round")
-end
+  end
+  
+def set_focus_to_id(id)
+  javascript_tag("$('#{id}').focus()");
+end  
 end
