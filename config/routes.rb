@@ -10,12 +10,14 @@ SampleApp::Application.routes.draw do
   match '/signout', :to => 'sessions#destroy'
   
   match '/newlocation', :to => 'locations#new'
+  match '/newcategory', :to => 'categories#new'
 
   match '/newpost', :to => 'microposts#new'
   resources :users
   resources :locations
+  resources :categories
   resources :sessions, :only=> [:new, :create, :destroy]
-  resources :microposts, :only=>[:create, :destroy]
+  resources :microposts, :only=>[:create, :destroy, :show]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

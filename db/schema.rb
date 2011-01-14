@@ -10,7 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110114111859) do
+ActiveRecord::Schema.define(:version => 20110114205400) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "locations", :force => true do |t|
     t.string   "name"
@@ -20,13 +26,16 @@ ActiveRecord::Schema.define(:version => 20110114111859) do
 
   create_table "microposts", :force => true do |t|
     t.string   "title"
-    t.string   "content"
+    t.text     "content"
     t.integer  "user_id"
     t.integer  "location_id"
+    t.integer  "category_id"
+    t.integer  "compensation"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "microposts", ["category_id"], :name => "index_microposts_on_category_id"
   add_index "microposts", ["location_id"], :name => "index_microposts_on_location_id"
   add_index "microposts", ["user_id"], :name => "index_microposts_on_user_id"
 

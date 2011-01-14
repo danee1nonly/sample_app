@@ -3,7 +3,7 @@
 
 <% if signed_in?%>
 <% if current_user.admin?%>
-  <%= link_to "new location", newlocation_path%>
+  <%= link_to "Create new location", newlocation_path%>
 <%end%>
 <%end%>
 
@@ -12,3 +12,6 @@
 <ul class ="locations">
   
   <%= render @locations%>
+</ul>
+
+<%=will_paginate @locations%>
